@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,10 +7,12 @@ import { MessageCircle, Phone, BookOpen, Brain, Moon, Target, Calendar, Trending
 import MoodTracker from '@/components/MoodTracker';
 import Achievements from '@/components/Achievements';
 import Goals from '@/components/Goals';
+import WeeklyStreakCalendar from '@/components/WeeklyStreakCalendar';
 import PageTransition from '@/components/PageTransition';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [showStreakCalendar, setShowStreakCalendar] = useState(false);
   const todayProgress = 60;
   const weeklyStreak = 7;
   const currentMood = "Calm";
@@ -152,7 +154,7 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-white/95 to-blue-50/95 backdrop-blur-lg shadow-2xl border-0 ring-2 ring-white/30 hover:scale-105 transition-all duration-300 overflow-hidden">
+              <Card className="bg-gradient-to-br from-white/95 to-blue-50/95 backdrop-blur-lg shadow-2xl border-0 ring-2 ring-white/30 hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer" onClick={() => setShowStreakCalendar(true)}>
                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-200/30 to-indigo-200/30 rounded-full -translate-y-10 translate-x-10"></div>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
                   <CardTitle className="text-sm font-bold text-gray-900">Weekly Streak</CardTitle>
@@ -167,7 +169,7 @@ const Dashboard = () => {
                       <div key={i} className={`w-3 h-3 rounded-full ${i < weeklyStreak ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
                     ))}
                   </div>
-                  <p className="text-sm text-gray-700 font-medium">Keep up the great work!</p>
+                  <p className="text-sm text-gray-700 font-medium">Click to view calendar</p>
                 </CardContent>
               </Card>
 
@@ -278,6 +280,12 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Weekly Streak Calendar Modal */}
+      <WeeklyStreakCalendar 
+        isOpen={showStreakCalendar} 
+        onClose={() => setShowStreakCalendar(false)} 
+      />
     </PageTransition>
   );
 };
